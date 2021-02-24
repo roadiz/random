@@ -38,6 +38,7 @@
 # PHPUnit
 /app/phpunit.xml
 /phpunit.xml
+/.phpcs-cache
 
 # Build data
 /build/
