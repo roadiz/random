@@ -1,5 +1,5 @@
 parameters:
-    level: 7
+    level: max
     paths:
         - src
     excludePaths:
@@ -7,6 +7,5 @@ parameters:
         - */bower_components/*
         - */static/*
     reportUnmatchedIgnoredErrors: false
-    ignoreErrors:
-        - identifier: missingType.iterableValue
-        - identifier: missingType.generics
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
