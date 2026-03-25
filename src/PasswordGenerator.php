@@ -28,23 +28,15 @@ class PasswordGenerator extends RandomGenerator implements PasswordGeneratorInte
         $all = '';
         $password = '';
         foreach ($sets as $set) {
-            $chars = \mb_str_split($set);
-            $password .= $chars[random_int(0, count($chars) - 1)];
+            $password .= $set[array_rand(\mb_str_split($set))];
             $all .= $set;
         }
 
         $all = \mb_str_split($all);
         for ($i = 0; $i < $length - count($sets); ++$i) {
-            $password .= $all[random_int(0, count($all) - 1)];
+            $password .= $all[array_rand($all)];
         }
 
-        // Fisher-Yates shuffle using CSPRNG — str_shuffle() uses Mersenne Twister
-        $chars = \mb_str_split($password);
-        for ($i = count($chars) - 1; $i > 0; --$i) {
-            $j = random_int(0, $i);
-            [$chars[$i], $chars[$j]] = [$chars[$j], $chars[$i]];
-        }
-
-        return implode('', $chars);
+        return str_shuffle($password);
     }
 }
