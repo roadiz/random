@@ -16,7 +16,6 @@ class PasswordGenerator extends RandomGenerator implements PasswordGeneratorInte
      *
      * @see https://gist.github.com/tylerhall/521810
      */
-    #[\Override]
     public function generatePassword(int $length = 16): string
     {
         $sets = [];
