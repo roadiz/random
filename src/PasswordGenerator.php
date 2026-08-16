@@ -11,40 +11,36 @@ class PasswordGenerator extends RandomGenerator implements PasswordGeneratorInte
      * one uppercase letter, one digit, and one special character. The remaining characters
      * in the password are chosen at random from those four sets.
      *
-     * The available characters in each set are user-friendly - there are no ambiguous
+     * The available characters in each set are user friendly - there are no ambiguous
      * characters such as i, l, 1, o, 0, etc.
+     *
+     * @param int $length
+     * @return string
      *
      * @see https://gist.github.com/tylerhall/521810
      */
-    #[\Override]
-    public function generatePassword(int $length = 16): string
+    public function generatePassword(int $length = 12)
     {
         $sets = [];
         $sets[] = 'abcdefghjkmnpqrstuvwxyz';
         $sets[] = 'ABCDEFGHJKMNPQRSTUVWXYZ';
         $sets[] = '23456789';
-        $sets[] = '!@#$%&*?-';
+        $sets[] = '!@#$%&*?';
 
         $all = '';
         $password = '';
         foreach ($sets as $set) {
-            $chars = \mb_str_split($set);
-            $password .= $chars[random_int(0, count($chars) - 1)];
+            $password .= $set[array_rand(\mb_str_split($set))];
             $all .= $set;
         }
 
         $all = \mb_str_split($all);
-        for ($i = 0; $i < $length - count($sets); ++$i) {
-            $password .= $all[random_int(0, count($all) - 1)];
+        for ($i = 0; $i < $length - count($sets); $i++) {
+            $password .= $all[array_rand($all)];
         }
 
-        // Fisher-Yates shuffle using CSPRNG — str_shuffle() uses Mersenne Twister
-        $chars = \mb_str_split($password);
-        for ($i = count($chars) - 1; $i > 0; --$i) {
-            $j = random_int(0, $i);
-            [$chars[$i], $chars[$j]] = [$chars[$j], $chars[$i]];
-        }
+        $password = str_shuffle($password);
 
-        return implode('', $chars);
+        return $password;
     }
 }

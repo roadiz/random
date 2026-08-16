@@ -6,5 +6,9 @@ namespace RZ\Roadiz\Random;
 
 interface PasswordGeneratorInterface
 {
-    public function generatePassword(int $length = 16): string;
+    /**
+     * @param int $length
+     * @return string
+     */
+    public function generatePassword(int $length = 12);
 }
